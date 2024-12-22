@@ -13,47 +13,17 @@ function getEarthMat(sunDirection = defaultSunDirection) {
     THREE.TextureLoader,
     "./textures/earth-nightmap-4k.jpg"
   );
-  const bumpMap = useLoader(
-    THREE.TextureLoader,
-    "./textures/earth-bump-4k.jpg"
-  );
-//   const roughnessMap = useLoader(
-//     THREE.TextureLoader,
-//     "./textures/earth-specular-4k.jpg"
-//   );
   const cloudsMap = useLoader(
     THREE.TextureLoader,
     "./textures/earth-clouds-4k.jpg"
   );
-  bumpMap.wrapS = THREE.RepeatWrapping;
-  bumpMap.wrapT = THREE.RepeatWrapping;
 
   const uniforms = {
     dayTexture: { value: map },
-    elevTexture: { value: bumpMap },
     nightTexture: { value: nightMap },
     cloudsTexture: { value: cloudsMap },
     sunDirection: { value: sunDirection },
   };
-
-//   const vertexShader = `
-//   uniform float size;
-//   uniform sampler2D elevTexture;
-
-//   varying vec2 vUv;
-//   varying float vVisible;
-
-//   void main() {
-//     vUv = uv;
-//     vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-//     float elv = texture2D(elevTexture, vUv).r;
-//     vec3 vNormal = normalMatrix * normal;
-//     vVisible = step(0.0, dot( -normalize(mvPosition.xyz), normalize(vNormal)));
-//     mvPosition.z += 0.35 * elv;
-//     gl_PointSize = size;
-//     gl_Position = projectionMatrix * mvPosition;
-//   }
-// `;
 
   const vs = `
     varying vec2 vUv;
@@ -62,19 +32,17 @@ function getEarthMat(sunDirection = defaultSunDirection) {
     uniform sampler2D elevTexture;
 
     void main() {
-      vUv = uv;
-      vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-      float elv = texture2D(elevTexture, vUv).r;
-      mvPosition.z += elv * 0.15;
-      gl_Position = projectionMatrix * mvPosition;
+      // Position
+      vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+      gl_Position = projectionMatrix * viewMatrix * modelPosition;
 
       // Model normal
-      vec3 modelNormal = (modelViewMatrix * vec4(normal, 0.0)).xyz;
+      vec3 modelNormal = (modelMatrix * vec4(normal, 0.0)).xyz;
 
       // Varyings
       vUv = uv;
       vNormal = modelNormal;
-      vPosition = mvPosition.xyz;
+      vPosition = modelPosition.xyz;
     }
   `;
 

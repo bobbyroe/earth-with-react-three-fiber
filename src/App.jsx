@@ -27,9 +27,7 @@ function Earth() {
     </group>
   );
 }
-// const sunLight = new THREE.DirectionalLight(0xffffff, 4.0);
-// sunLight.position.copy(sunDirection);
-// scene.add(sunLight);
+
 function App() {
   const { x, y, z } = sunDirection;
   return (
