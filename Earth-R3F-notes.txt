@@ -1,0 +1,6 @@
+Earth - @React-Three/Fiber
+
+
+https://visibleearth.nasa.gov/ for textures
+
+https://www.solarsystemscope.com/textures/
