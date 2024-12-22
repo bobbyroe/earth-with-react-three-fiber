@@ -19,7 +19,7 @@ function getSprite({ hasFog, color, opacity, path, pos, size }) {
   return sprite;
 }
 
-function getSprites({
+function getLayer({
   hasFog = true,
   hue = 0.65,
   numSprites = 8,
@@ -47,16 +47,4 @@ function getSprites({
   }
   return layerGroup;
 }
-
-function Nebula() {
-  const sprites = getSprites({
-    numSprites: 8,
-    radius: 10,
-    z: -10.5,
-    size: 24,
-    opacity: 0.2,
-    path: "./rad-grad.png",
-  });
-  return <primitive object={sprites} />
-}
-export default Nebula;
+export default getLayer;
