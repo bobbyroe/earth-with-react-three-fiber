@@ -21,7 +21,6 @@ function Earth() {
       <mesh ref={ref}>
         <icosahedronGeometry args={[2, 64]} />
         <EarthMaterial sunDirection={sunDirection}/>
-        
         <AtmosphereMesh />
       </mesh>
     </group>
