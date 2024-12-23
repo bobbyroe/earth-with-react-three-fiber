@@ -1,31 +1,40 @@
 import * as THREE from "three";
 import React from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Nebula from "./Nebula";
+import StarField from "./StarField";
+import AtmosphereMesh from "./AtmosphereMesh";
+import EarthMaterial from "./EarthMaterial";
+const sunDirection = new THREE.Vector3(-2, 0.5, 1.5);
+function EarthMesh() {
 
-function IcoSphere() {
-  const icoRef = React.useRef();
-
+  const ref = React.useRef();
+  const map = useLoader(THREE.TextureLoader, "./textures/earth-daymap-4k.jpg");
   useFrame(() => {
-    icoRef.current.rotation.x += 0.01;
-    icoRef.current.rotation.y += 0.01;
+    ref.current.rotation.y += 0.002;
   });
+  const radius = 1.5;
   return (
-    <mesh ref={icoRef}>
-      <icosahedronGeometry />
-      <meshStandardMaterial color={0xffff00} />
-    </mesh>
+    <group rotation-z={THREE.MathUtils.degToRad(-23.5)}>
+      <mesh ref={ref}>
+        <icosahedronGeometry args={[radius, 32]}/>
+        <EarthMaterial/>
+      </mesh>
+      <AtmosphereMesh radius={radius * 1.02}/>
+    </group>
   );
 }
 
 function App() {
+  const { x, y, z } = sunDirection;
   return (
     <Canvas gl={{ toneMapping: THREE.NoToneMapping }}>
-      <IcoSphere />
-      <hemisphereLight args={[0xffffff, 0x000000, 1.0]} />
+      <EarthMesh />
       <Nebula />
+      <StarField />
       <OrbitControls />
+      <directionalLight position={[x, y, z]} />
     </Canvas>
   );
 }

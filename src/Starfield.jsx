@@ -16,7 +16,7 @@ function getPoints({ numStars = 500 } = {}) {
     const prob = Math.random();
     const light = Math.random();
     function update(t) {
-      const lightness = prob > 0.8 ? light + Math.sin(t * rate) * 1 : light;
+      const lightness = prob > 0.0 ? light + Math.sin(t * rate) * 1 : light;
       return lightness;
     }
     return {

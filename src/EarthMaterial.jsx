@@ -77,14 +77,6 @@ function getEarthMat(sunDirection = defaultSunDirection) {
       float cloudsMix = smoothstep(0.0, 1.0, specularCloudsColor.g);
       cloudsMix *= dayMix;
       color = mix(color, vec3(1.0), cloudsMix);
-
-      // Specular
-      vec3 reflection = reflect(- sunDirection, normal);
-      float specular = - dot(reflection, viewDirection);
-      // specular = max(specular, 0.0);
-      // specular = pow(specular, 0.5);
-      // specular *= specularCloudsColor.r;
-      // color += specular * 0.5;
       
       // Final color
       gl_FragColor = vec4(color, 1.0);
