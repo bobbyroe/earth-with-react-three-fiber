@@ -3,13 +3,13 @@ import React from "react";
 import { useFrame } from "@react-three/fiber";
 import { Trail } from "@react-three/drei";
 
-function Comet() {
+function ShootingStar() {
   const ref = React.useRef();
   const startPos = new THREE.Vector3(-10, 10, -10);
   const targetPos = new THREE.Vector3(7, 5, -7);
   const curPos = new THREE.Vector3().copy(startPos);
   let elapsedTime = -1;
-  
+
   useFrame((_, delta) => {
     const { position } = ref.current;
     elapsedTime += delta;
@@ -36,4 +36,4 @@ function Comet() {
   );
 }
 
-export default Comet;
+export default ShootingStar;
